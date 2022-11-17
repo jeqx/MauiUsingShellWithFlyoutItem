@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiUsingShellWithFlyoutItem.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiUsingShellWithFlyoutItem"
+    xmlns:views="clr-namespace:MauiUsingShellWithFlyoutItem.Views"
+    Shell.FlyoutBehavior="Flyout"
+    FlyoutIcon="icon_outline_menu.svg">
+
+
+    <!--#region Configuration to Shell -->
+
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}} "
+              HeightRequest="150">
+
+            <Border BackgroundColor="Transparent"
+                    StrokeShape="RoundRectangle 100"
+                    StrokeThickness="0"
+                    Margin="15,15,0,0"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    HeightRequest="54"
+                    WidthRequest="54">
+                <Image x:Name="imgPhotoProfile" Source="dotnet_bot.svg" />
+            </Border>
+
+            <Label x:Name="lblNameAndLastNameUserLogin" 
+                   TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray100}}"
+                   Margin="79,25,0,0"
+                   FontSize="15"
+                   Text="DotNet Bot" />
+
+            <Label x:Name="lblTagUser"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}"
+                   Margin="79,41,0,0"
+                   FontSize="10"
+                   Text="PROFISSIONAL" />
+
+            <Button x:Name="btnChangeUser"
+                    Padding="0"
+                    HeightRequest="20"
+                    WidthRequest="60"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Margin="79,55,0,0"
+                    FontSize="12"
+                    Text="TROCAR" />
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid
+                HeightRequest="{OnPlatform WinUI=60, Android=50, iOS=50}"
+                VerticalOptions="Center"
+                ColumnSpacing="{OnPlatform WinUI=0}"
+                RowSpacing="{OnPlatform WinUI=0}">
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{ x:StaticResource Secondary }" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{OnPlatform Android=54, iOS=50, WinUI=Auto}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    HeightRequest="{OnPlatform Android=24, iOS=22, WinUI=30}"
+                    WidthRequest="{OnPlatform Android=24, iOS=22, WinUI=30}"
+                    Source="{Binding Icon}">
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <OnPlatform.Platforms>
+                                <On Platform="WinUI" Value="12,0,12,0" />
+                                <On Platform="Android" Value="15,0,0,0" />
+                            </OnPlatform.Platforms>
+                        </OnPlatform>
+                    </Image.Margin>
+                </Image>
+
+                <Label 
+                    Grid.Column="1"
+                    Text="{Binding Title}" 
+                    TextColor="{AppThemeBinding Light={x:StaticResource Black}, Dark={x:StaticResource White}}"
+                    
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Start"
+                    VerticalTextAlignment="Center"
+                    Margin="10, 0, 0, 0" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+
+    <!--#endregion-->
+
+
+    <FlyoutItem
+        Title="My Schedule"
+        Icon="icon_my_schedule.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:MyScheduleView}"/>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="Preferences"
+        Icon="icon_preferences.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:PreferencesView}"/>
+    </FlyoutItem>
+
+
+</Shell>
